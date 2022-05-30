@@ -67,11 +67,18 @@ svg {
   margin:10px;
   margin-top: 0;
   position: absolute;
+  /* font-weight: bold; */
+  font-family: monospace;
   z-index: 100;
   /* opacity: 0; */
   display: block;
   font-size: 12px;
   opacity: 0;
+  background-color: white;
+  padding: 5px;
+  padding-bottom: 0;
+  padding-top: 0;
+  border: 1px solid black;
 }
 .show-transcription {
   opacity: 1 !important;
