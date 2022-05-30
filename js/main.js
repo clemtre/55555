@@ -1,9 +1,8 @@
 const count = 0;
 let flagEspace = true;
 
-
 function genSvg(vals, refs) {
-  let spanRef = document.createElement("span");
+  let spanRef = document.createElement("p");
   spanRef.innerHTML = refs;
   for (let i = 0; i < vals.length; i++) {
     vals[i] = range(parseFloat(vals[i]), 0, 1, 0, 0.01);
@@ -48,20 +47,40 @@ function genSvg(vals, refs) {
 
 // console.log(phrase);
 
+function polish() {
+  document
+    .querySelectorAll(".ph")
+    .forEach(
+      (e) =>
+        (e.style.width =
+          e.firstElementChild.firstElementChild.getBoundingClientRect().width /
+            2 +
+          "px")
+    );
 
+  document
+    .querySelectorAll(".svg-debug")
+    .forEach(
+      (e) =>
+        (e.style.width =
+          e.firstElementChild.getBoundingClientRect().width + "px")
+    );
 
-document
-  .querySelectorAll(".ph")
-  .forEach(
-    (e) =>
-      (e.style.width =
-        e.firstElementChild.firstElementChild.getBoundingClientRect().width +
-        "px")
-  );
+    strokeWidth = document.getElementById("slide-graisse").value * (document.getElementById("slide-graisse").value * .1);
 
-document
-  .querySelectorAll(".svg-debug")
-  .forEach(
-    (e) =>
-      (e.style.width = e.firstElementChild.getBoundingClientRect().width + "px")
-  );
+  $(function () {
+    $("#check-transcription")
+      .change(function () {
+        $(".ref").toggleClass("show-transcription", this.checked);
+      })
+      .change();
+  });
+
+  $(function () {
+    $("#check-boundingbox")
+      .change(function () {
+        $(".svg-debug").toggleClass("bounding-box", this.checked);
+      })
+      .change();
+  });
+}

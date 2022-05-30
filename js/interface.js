@@ -1,7 +1,7 @@
-const 
+let 
 
                largeur = 100,
-               hauteur = 100,
+               hauteur = 200,
                col1 = 'black', 
                col2 = 'black',
                strokeWidth = 10,

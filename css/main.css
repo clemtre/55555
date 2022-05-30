@@ -9,16 +9,21 @@ svg {
   /* mix-blend-mode: multiply; */
   /* border: 1px solid blue; */
 }
-#textarea {
+#ui {
   position:absolute;
   right: 0;
   bottom: 0;
+  opacity: 0;
+  padding: 10px;
+  border: 1px solid red;
+}
+#ui:hover{
+  opacity: 1;
 }
 #inject {
   display: flex;
   margin-left: 0;
   flex-direction: row;
-  justify-content: flex-start;
   flex-wrap: wrap;
   /* flex: auto; */
   /* gap: 10px; */
@@ -27,7 +32,8 @@ svg {
   width: 50%;
 }
 .ph {
-  flex-basis: 20%;
+  /* flex:auto; */
+  /* flex-basis: 20%; */
   stroke-linecap: square;
   margin: 0;
   padding: 0;
@@ -35,10 +41,13 @@ svg {
   /* border-bottom: 1px solid red; */
   /* border: 1px solid blue; */
 }
+.bounding-box{
+  border: 1px solid red;
+}
+
 .svg-debug {
   overflow: visible !important;
   position: absolute;
-  /* border: 1px solid red; */
   /* width: 100px !important; */
   /* height: auto; */
   display: inline-block;
@@ -58,10 +67,14 @@ svg {
   margin:10px;
   margin-top: 0;
   position: absolute;
-  z-index: 100
+  z-index: 100;
   /* opacity: 0; */
   display: block;
   font-size: 12px;
+  opacity: 0;
+}
+.show-transcription {
+  opacity: 1 !important;
 }
 
 button {
@@ -70,3 +83,4 @@ button {
 button:hover {
   opacity: 1;
 }
+
