@@ -1,0 +1,72 @@
+body {
+  font: 20px/1.1em arial, sans-serif;
+  background: white;
+}
+svg {
+  stroke-width: 1px;
+  overflow: visible !important;
+  opacity: 1;
+  /* mix-blend-mode: multiply; */
+  /* border: 1px solid blue; */
+}
+#textarea {
+  position:absolute;
+  right: 0;
+  bottom: 0;
+}
+#inject {
+  display: flex;
+  margin-left: 0;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  /* flex: auto; */
+  /* gap: 10px; */
+  /* width: 50%; */
+  height: fit-content;
+  width: 50%;
+}
+.ph {
+  flex-basis: 20%;
+  stroke-linecap: square;
+  margin: 0;
+  padding: 0;
+  overflow: visible !important;
+  /* border-bottom: 1px solid red; */
+  /* border: 1px solid blue; */
+}
+.svg-debug {
+  overflow: visible !important;
+  position: absolute;
+  /* border: 1px solid red; */
+  /* width: 100px !important; */
+  /* height: auto; */
+  display: inline-block;
+}
+.a {
+  font-size: 64px;
+}
+
+@media print {
+  @page {
+    size: A5;
+  }
+}
+
+.ref {
+  color: blue;
+  margin:10px;
+  margin-top: 0;
+  position: absolute;
+  z-index: 100
+  /* opacity: 0; */
+  display: block;
+  font-size: 12px;
+}
+
+button {
+  opacity: 0;
+}
+button:hover {
+  opacity: 1;
+}
