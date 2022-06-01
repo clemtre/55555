@@ -13,6 +13,9 @@ let
                terminaison = 'square',
                TOTAL = 30,
                _duo = true,
-               ampP = 2
-
+               ampP = 2,
+                poigneePrefix = '4px solid ',
+                lignesStrokeCol = '#f0f',
+                lignesStrokeWidth = '1',
+                sommets = true;
           
