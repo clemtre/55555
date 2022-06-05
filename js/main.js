@@ -1,14 +1,25 @@
 const count = 0;
 let flagEspace = true;
 
+let odd = true
+
 function genSvg(vals, refs) {
   let spanRef = document.createElement("p");
   spanRef.innerHTML = refs;
+  console.log(vals)
   for (let i = 0; i < vals.length; i++) {
     vals[i] = range(parseFloat(vals[i]), 0, 1, 0, 0.01);
   }
+
+  const xMin = Math.min(vals[0], vals[6])
+  vals[0] = vals[0] - xMin
+  vals[2] = vals[2] - xMin
+  vals[4] = vals[4] - xMin
+  vals[6] = vals[6] - xMin
+  
   const temp = document.createElement("div");
-  temp.setAttribute("class", "ph");
+  odd ? temp.setAttribute("class", "ph phEven") : temp.setAttribute("class", "ph phOdd");
+  odd = !odd
   let o = {
     x1: vals[0],
     y1: vals[1],
@@ -19,6 +30,7 @@ function genSvg(vals, refs) {
     x4: vals[6],
     y4: vals[7],
   };
+
   const pCtn = document.createElement("div");
   const lCtn = document.createElement("div");
 
@@ -113,8 +125,7 @@ function polish() {
     .forEach(
       (e) =>
         (e.style.width =
-          e.firstElementChild.firstElementChild.getBoundingClientRect().width /
-            2 +
+          e.firstElementChild.firstElementChild.getBoundingClientRect().width +
           "px")
     );
 
