@@ -177,14 +177,8 @@ function polish() {
     "--approche",
     document.getElementById("slide-approche").value + "px"
   );
-  if (document.getElementById("check-test").checked) {
-    document.querySelectorAll(".mot").forEach((e) => e.classList.add("test"));
-  }
   if (document.getElementById("check-trace").checked) {
     document.querySelectorAll(".trace").forEach((e) => e.classList.add("show-trace"));
-  }
-  if (document.getElementById("check-syllabe").checked) {
-    document.querySelectorAll(".syllabe").forEach((e) => e.classList.add("syllabe-contour"));
   }
   if (document.getElementById("check-syllabe-souligne").checked) {
     document.querySelectorAll(".syllabe").forEach((e) => e.classList.add("syllabe-souligne"));
