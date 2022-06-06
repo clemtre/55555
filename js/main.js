@@ -1,34 +1,37 @@
-const count = 0;
 let flagEspace = true;
 
-let odd = true
-
+let odd = true;
+let syllabeCountTemp = -1;
+let syllabeCount = 0;
+let syllabesCtn = [];
 function genSvg(vals, refs) {
+  const temp = document.createElement("div");
   let spanRef = document.createElement("p");
   spanRef.innerHTML = refs;
-  console.log(vals)
   for (let i = 0; i < vals.length; i++) {
     vals[i] = range(parseFloat(vals[i]), 0, 1, 0, 0.01);
   }
 
-  const xMin = Math.min(vals[0], vals[6])
-  vals[0] = vals[0] - xMin
-  vals[2] = vals[2] - xMin
-  vals[4] = vals[4] - xMin
-  vals[6] = vals[6] - xMin
-  
-  const temp = document.createElement("div");
-  odd ? temp.setAttribute("class", "ph phEven") : temp.setAttribute("class", "ph phOdd");
-  odd = !odd
+  const xMin = Math.min(vals.x1, vals.x2, vals.x3, vals.x4);
+  vals.x1 = parseFloat((vals.x1 - xMin).toFixed(2));
+  vals.x2 = parseFloat((vals.x2 - xMin).toFixed(2));
+  vals.x3 = parseFloat((vals.x3 - xMin).toFixed(2));
+  vals.x4 = parseFloat((vals.x4 - xMin).toFixed(2));
+
+  vals.y1 = parseFloat(vals.y1.toFixed(2));
+  vals.y2 = parseFloat(vals.y2.toFixed(2));
+  vals.y3 = parseFloat(vals.y3.toFixed(2));
+  vals.y4 = parseFloat(vals.y4.toFixed(2));
+  temp.setAttribute("class", "syllabe")
   let o = {
-    x1: vals[0],
-    y1: vals[1],
-    x2: vals[2],
-    y2: vals[3],
-    x3: vals[4],
-    y3: vals[5],
-    x4: vals[6],
-    y4: vals[7],
+    x1: vals.x1,
+    y1: vals.y1,
+    x2: vals.x2,
+    y2: vals.y2,
+    x3: vals.x3,
+    y3: vals.y3,
+    x4: vals.x4,
+    y4: vals.y4,
   };
 
   const pCtn = document.createElement("div");
@@ -70,35 +73,35 @@ function genSvg(vals, refs) {
     lignes[i] = document.createElement("div");
     lignes[i].style.position = "absolute";
   }
-
-  lignes[0].innerHTML = `<svg><line x1="${vals[0] * _w}" y1="${
-    vals[1] * _w
-  }" x2="${vals[2] * _w}" y2="${
-    vals[3] * _w
+  let offSetX = 0;
+  lignes[0].innerHTML = `<svg width="0" height="0" ><line x1="${vals.x1 * _w + offSetX}" y1="${
+    vals.y1 * _w
+  }" x2="${vals.x2 * _w + offSetX}" y2="${
+    vals.y2 * _w
   }" stroke="${lignesStrokeCol}" stroke-width="${lignesStrokeWidth}" /></svg>`;
 
-  lignes[1].innerHTML = `<svg><line x1="${vals[4] * _w}" y1="${
-    vals[5] * _w
-  }" x2="${vals[6] * _w}" y2="${
-    vals[7] * _w
+  lignes[1].innerHTML = `<svg width="0" height="0" ><line x1="${vals.x3 * _w + offSetX}" y1="${
+    vals.y3 * _w
+  }" x2="${vals.x4 * _w + offSetX}" y2="${
+    vals.y4 * _w
   }" stroke="${lignesStrokeCol}" stroke-width="${lignesStrokeWidth}" /></svg>`;
 
   let poigneesOffset = 4;
 
-  poignees[0].style.marginLeft = vals[0] * _w - poigneesOffset + "px";
-  poignees[0].style.marginTop = vals[1] * _h - poigneesOffset + "px";
+  poignees[0].style.left = vals.x1 * _w - poigneesOffset + offSetX + "px";
+  poignees[0].style.top = vals.y1 * _h - poigneesOffset + "px";
   poignees[0].style.border = poigneePrefix + "red";
 
-  poignees[1].style.marginLeft = vals[2] * _w - poigneesOffset + "px";
-  poignees[1].style.marginTop = vals[3] * _h - poigneesOffset + "px";
+  poignees[1].style.left = vals.x2 * _w - poigneesOffset + offSetX + "px";
+  poignees[1].style.top = vals.y2 * _h - poigneesOffset + "px";
   poignees[1].style.border = poigneePrefix + "blue";
 
-  poignees[2].style.marginLeft = vals[4] * _w - poigneesOffset + "px";
-  poignees[2].style.marginTop = vals[5] * _h - poigneesOffset + "px";
+  poignees[2].style.left = vals.x3 * _w - poigneesOffset + offSetX + "px";
+  poignees[2].style.top = vals.y3 * _h - poigneesOffset + "px";
   poignees[2].style.border = poigneePrefix + "orange";
 
-  poignees[3].style.marginLeft = vals[6] * _w - poigneesOffset + "px";
-  poignees[3].style.marginTop = vals[7] * _h - poigneesOffset + "px";
+  poignees[3].style.left = vals.x4 * _w - poigneesOffset + offSetX + "px";
+  poignees[3].style.top = vals.y4 * _h - poigneesOffset + "px";
   poignees[3].style.border = poigneePrefix + "purple";
 
   for (let i = 0; i < 4; i++) {
@@ -114,40 +117,82 @@ function genSvg(vals, refs) {
   pCtn.setAttribute("class", "trace");
   lCtn.setAttribute("class", "trace");
 
-  document.getElementById("inject").appendChild(temp);
+  if (!syllabesCtn[vals.mot]) {
+    syllabesCtn[vals.mot] = document.createElement("div");
+    syllabesCtn[vals.mot].setAttribute("class", "mot");
+    document.getElementById("inject").appendChild(syllabesCtn[vals.mot]);
+  }
+  console.log(vals.x1);
+  syllabesCtn[vals.mot].appendChild(temp);
 }
 
 // console.log(phrase);
 
 function polish() {
-  document
-    .querySelectorAll(".ph")
-    .forEach(
-      (e) =>
-        (e.style.width =
-          e.firstElementChild.firstElementChild.getBoundingClientRect().width +
-          "px")
-    );
+  // document
+  //   .querySelectorAll(".ph")
+  //   .forEach(
+  //     (e) =>
+  //       (e.style.width =
+  //         e.firstElementChild.firstElementChild.getBoundingClientRect().width +
+  //         "px")
+  //   );
 
+  document.querySelectorAll(".syllabe").forEach(
+    (e) =>
+      (e.style.width =
+        // -20 SEMBLE CONSTANT MAIS AUCUNE CONFIRMATION
+        e.querySelector("path").getBoundingClientRect().width - 20 + "px")
+  );
+ 
+
+  for (let i = 0; i < document.querySelectorAll(".syllabe").length; i++) {
+    const e = document.querySelectorAll(".syllabe")[i];
+    const xPh = e.getClientRects()[0].x;
+    const xPath = e.querySelector("path").getClientRects()[0].x;
+    // e.style.width =
+    const toDecal = xPath - xPh;
+    e.querySelector("path").style.transform = "translateX(" + -toDecal + "px)";
+    e.querySelectorAll(".trace").forEach((a) => a.style.transform = "translateX(" + -toDecal + "px)");
+    e.querySelectorAll("line").forEach((b) => b.style.transform = "translateY(" + -20 + "px)");
+
+    // console.log(i, e.querySelector("path").getClientRects()[0]);
+  }
   document
     .querySelectorAll(".svg-debug")
     .forEach(
-      (e) =>
-        (e.style.width =
-          e.firstElementChild.getBoundingClientRect().width + "px")
+      (e) => e.querySelector("path").getBoundingClientRect().width + "px"
     );
 
   strokeWidth =
     document.getElementById("slide-graisse").value *
     (document.getElementById("slide-graisse").value * 0.1);
 
-  $(function () {
-    $("#check-trace")
-      .change(function () {
-        $(".trace").toggleClass("show-trace", this.checked);
-      })
-      .change();
-  });
+  document.documentElement.style.setProperty(
+    "--intermot",
+    document.getElementById("slide-intermot").value + "px"
+  );
+
+  document.documentElement.style.setProperty(
+    "--approche",
+    document.getElementById("slide-approche").value + "px"
+  );
+  if (document.getElementById("check-test").checked) {
+    document.querySelectorAll(".mot").forEach((e) => e.classList.add("test"));
+  }
+  if (document.getElementById("check-trace").checked) {
+    document.querySelectorAll(".trace").forEach((e) => e.classList.add("show-trace"));
+  }
+  if (document.getElementById("check-syllabe").checked) {
+    document.querySelectorAll(".syllabe").forEach((e) => e.classList.add("syllabe-contour"));
+  }
+  if (document.getElementById("check-syllabe-souligne").checked) {
+    document.querySelectorAll(".syllabe").forEach((e) => e.classList.add("syllabe-souligne"));
+  }
+  if (document.getElementById("check-mot").checked) {
+    document.querySelectorAll(".mot").forEach((e) => e.classList.add("mot-contour"));
+  }
+  
 
   $(function () {
     $("#check-transcription")
@@ -157,11 +202,5 @@ function polish() {
       .change();
   });
 
-  $(function () {
-    $("#check-boundingbox")
-      .change(function () {
-        $(".svg-debug").toggleClass("bounding-box", this.checked);
-      })
-      .change();
-  });
+  
 }
