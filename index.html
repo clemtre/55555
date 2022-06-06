@@ -11,24 +11,32 @@
     <link href="css/pagedjs/pagedjs.css" rel="stylesheet" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link
-      id="style-screen"
-      href="css/style-screen.css"
-      rel="stylesheet"
-      type="text/css"
+    id="style-screen"
+    href="css/style-screen.css"
+    rel="stylesheet"
+    type="text/css"
     />
-
+    
+    <link href="css/vars.css" rel="stylesheet" type="text/css" />
     <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="css/signes.css" rel="stylesheet" type="text/css" />
   </head>
 
   <body>
+    <div id="cc"></div>
     <div id="inject"></div>
     <div id="ui">
       graisse : <input type="range" min="1" max="40" value="5" name="" oninput="drawSignes()" id="slide-graisse">
       <br>
+      approche : <input type="range" min="-200" max="400" value="5" name="" oninput="drawSignes()" id="slide-approche">
+      <br>
+      intermot : <input type="range" min="-200" max="400" value="5" name="" oninput="drawSignes()" id="slide-intermot">
+      <br>
       lignes et poignées : <input type="checkbox" name="" id="check-trace" onclick="drawSignes()"> <br>
       transcription : <input type="checkbox" name="" id="check-transcription"> <br>
-      contours : <input type="checkbox" name="" id="check-boundingbox"> <br>
-      <textarea name="" id="textarea" cols="30" rows="10" oninput="drawSignes()"></textarea>
+      syllabe : <input type="checkbox" name="" id="check-syllabe-souligne" oninput="drawSignes()"> <br>
+      mot : <input type="checkbox" name="" id="check-mot" oninput="drawSignes()" checked> <br>
+      <textarea name="" id="textarea"  cols="30" rows="10" oninput="drawSignes()">h-e-l-l-o l-a t-e-a-m</textarea>
 
     </div>
   </body>

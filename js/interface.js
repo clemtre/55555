@@ -4,7 +4,7 @@ let
                hauteur = 200,
                col1 = 'black', 
                col2 = 'black',
-               strokeWidth = 10,
+               strokeWidth = 1,
                _biseauAmp = 20,
                _hue = Math.random()*360,
                _biseau = 1
