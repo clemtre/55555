@@ -4,10 +4,14 @@ let odd = true;
 let syllabeCountTemp = -1;
 let syllabeCount = 0;
 let syllabesCtn = [];
+let lignesCount = 0;
+let lignesCtn = [];
 function genSvg(vals, refs) {
   const temp = document.createElement("div");
   let spanRef = document.createElement("p");
+  let spanTrad = document.createElement("p");
   spanRef.innerHTML = refs;
+  spanTrad.innerHTML = vals.trad || "-";
   for (let i = 0; i < vals.length; i++) {
     vals[i] = range(parseFloat(vals[i]), 0, 1, 0, 0.01);
   }
@@ -22,7 +26,7 @@ function genSvg(vals, refs) {
   vals.y2 = parseFloat(vals.y2.toFixed(2));
   vals.y3 = parseFloat(vals.y3.toFixed(2));
   vals.y4 = parseFloat(vals.y4.toFixed(2));
-  temp.setAttribute("class", "syllabe")
+  temp.setAttribute("class", "syllabe");
   let o = {
     x1: vals.x1,
     y1: vals.y1,
@@ -60,7 +64,7 @@ function genSvg(vals, refs) {
     strokeWidth
   );
   spanRef.setAttribute("class", "ref");
-  temp.appendChild(spanRef);
+  spanTrad.setAttribute("class", "trad");
   for (let i = 0; i < 4; i++) {
     poignees[i] = document.createElement("div");
     poignees[i].style.width = "1px";
@@ -74,15 +78,15 @@ function genSvg(vals, refs) {
     lignes[i].style.position = "absolute";
   }
   let offSetX = 0;
-  lignes[0].innerHTML = `<svg width="0" height="0" ><line x1="${vals.x1 * _w + offSetX}" y1="${
-    vals.y1 * _w
-  }" x2="${vals.x2 * _w + offSetX}" y2="${
+  lignes[0].innerHTML = `<svg width="0" height="0" ><line x1="${
+    vals.x1 * _w + offSetX
+  }" y1="${vals.y1 * _w}" x2="${vals.x2 * _w + offSetX}" y2="${
     vals.y2 * _w
   }" stroke="${lignesStrokeCol}" stroke-width="${lignesStrokeWidth}" /></svg>`;
 
-  lignes[1].innerHTML = `<svg width="0" height="0" ><line x1="${vals.x3 * _w + offSetX}" y1="${
-    vals.y3 * _w
-  }" x2="${vals.x4 * _w + offSetX}" y2="${
+  lignes[1].innerHTML = `<svg width="0" height="0" ><line x1="${
+    vals.x3 * _w + offSetX
+  }" y1="${vals.y3 * _w}" x2="${vals.x4 * _w + offSetX}" y2="${
     vals.y4 * _w
   }" stroke="${lignesStrokeCol}" stroke-width="${lignesStrokeWidth}" /></svg>`;
 
@@ -117,13 +121,25 @@ function genSvg(vals, refs) {
   pCtn.setAttribute("class", "trace");
   lCtn.setAttribute("class", "trace");
 
+  if (vals.isRetour || lignesCount == 0) {
+    lignesCtn[lignesCount] = document.createElement("div");
+    lignesCtn[lignesCount].setAttribute("class", "LIGNE");
+    document.getElementById("inject").appendChild(lignesCtn[lignesCount]);
+    lignesCount++;
+  }
+
   if (!syllabesCtn[vals.mot]) {
     syllabesCtn[vals.mot] = document.createElement("div");
     syllabesCtn[vals.mot].setAttribute("class", "mot");
-    document.getElementById("inject").appendChild(syllabesCtn[vals.mot]);
   }
-  console.log(vals.x1);
+
+  console.log(vals.isRetour == lignesCount);
+
+  temp.appendChild(spanRef);
+  temp.appendChild(spanTrad);
+
   syllabesCtn[vals.mot].appendChild(temp);
+  lignesCtn[lignesCount - 1].appendChild(syllabesCtn[vals.mot]);
 }
 
 // console.log(phrase);
@@ -144,7 +160,6 @@ function polish() {
         // -20 SEMBLE CONSTANT MAIS AUCUNE CONFIRMATION
         e.querySelector("path").getBoundingClientRect().width - 20 + "px")
   );
- 
 
   for (let i = 0; i < document.querySelectorAll(".syllabe").length; i++) {
     const e = document.querySelectorAll(".syllabe")[i];
@@ -153,8 +168,12 @@ function polish() {
     // e.style.width =
     const toDecal = xPath - xPh;
     e.querySelector("path").style.transform = "translateX(" + -toDecal + "px)";
-    e.querySelectorAll(".trace").forEach((a) => a.style.transform = "translateX(" + -toDecal + "px)");
-    e.querySelectorAll("line").forEach((b) => b.style.transform = "translateY(" + -20 + "px)");
+    e.querySelectorAll(".trace").forEach(
+      (a) => (a.style.transform = "translateX(" + -toDecal + "px)")
+    );
+    e.querySelectorAll("line").forEach(
+      (b) => (b.style.transform = "translateY(" + -20 + "px)")
+    );
 
     // console.log(i, e.querySelector("path").getClientRects()[0]);
   }
@@ -174,27 +193,61 @@ function polish() {
   );
 
   document.documentElement.style.setProperty(
+    "--interligne",
+    document.getElementById("slide-interligne").value + "px"
+  );
+
+  document.documentElement.style.setProperty(
     "--approche",
     document.getElementById("slide-approche").value + "px"
   );
   if (document.getElementById("check-trace").checked) {
-    document.querySelectorAll(".trace").forEach((e) => e.classList.add("show-trace"));
+    document
+      .querySelectorAll(".trace")
+      .forEach((e) => e.classList.add("show-trace"));
   }
   if (document.getElementById("check-syllabe-souligne").checked) {
-    document.querySelectorAll(".syllabe").forEach((e) => e.classList.add("syllabe-souligne"));
+    document
+      .querySelectorAll(".syllabe")
+      .forEach((e) => e.classList.add("syllabe-contour"));
   }
   if (document.getElementById("check-mot").checked) {
-    document.querySelectorAll(".mot").forEach((e) => e.classList.add("mot-contour"));
+    document
+      .querySelectorAll(".mot")
+      .forEach((e) => e.classList.add("mot-contour"));
   }
-  
-
-  $(function () {
-    $("#check-transcription")
-      .change(function () {
-        $(".ref").toggleClass("show-transcription", this.checked);
-      })
-      .change();
-  });
-
-  
+  if (document.getElementById("check-transcription").checked) {
+    document
+      .querySelectorAll(".ref")
+      .forEach((e) => e.classList.add("show-transcription"));
+  }
+  if (document.getElementById("check-trad").checked) {
+    document
+      .querySelectorAll(".trad")
+      .forEach((e) => e.classList.add("show-trad"));
+  }
+}
+let UIwidth = 10;
+document.addEventListener("keydown", logKey);
+function logKey(e) {
+  console.log(e.code)
+  if (`${e.code}` == "ArrowRight") {
+    console.log(document.documentElement.root);
+    document.documentElement.style.setProperty(
+      "--bg",
+      `hsl(${Math.random() * 360},50%,50%)`
+    );
+  }
+  if (`${e.code}` == "ArrowLeft") {
+    document.documentElement.style.setProperty("--bg", `#000`);
+  }
+  if (`${e.code}` == "ControlLeft") {
+    UIwidth++;
+    document.documentElement.style.setProperty("--width", `${UIwidth}px`);
+    //code here
+  }
+  if (`${e.code}` == "AltLeft") {
+    UIwidth--;
+    document.documentElement.style.setProperty("--width", `${UIwidth}px`);
+  }
 }

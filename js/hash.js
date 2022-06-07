@@ -17,7 +17,7 @@ function encode(input) {
   let chars = [];
   let syllabes = [];
   for (let i = 0; i < input.length; i++) {
-    isChar = true
+    isChar = true;
     char = input.charAt(i);
     input.charAt(i) == "\n" ? (isSaut = true) : (isSaut = false);
     input.charAt(i) == " " ? (isEspace = true) : (isEspace = false);
@@ -25,7 +25,7 @@ function encode(input) {
     // if (!isEspace && !isSaut && !isTiret) {
     A = input.charCodeAt(i);
     if (isTiret || isEspace || isSaut) {
-      isChar = false
+      isChar = false;
       syllabe++;
     }
     if (isEspace || isSaut) {
@@ -54,7 +54,8 @@ function encode(input) {
   let ligneTemp = -1;
   let a;
   for (let syllabe = -1; syllabe < chars[chars.length - 1].syllabe; syllabe++) {
-    let trad = ''
+    let trad = "";
+    let isRetour = true;
     const primChar = chars.find((e) => e.syllabe === syllabe + 1);
     // console.log(primChar.mot, primChar.syllabe)
     let res = chars.filter((char) => char.syllabe === syllabe + 1);
@@ -65,11 +66,17 @@ function encode(input) {
     if (res[0].mot !== motTemp) {
       isMotDebut = true;
     }
+    if (primChar.id == 0 || primChar.isSaut) {
+      isRetour = true;
+    }
+    else{
+      isRetour = false
+    }
+    console.log(primChar);
     for (let e = 0; e < res.length; e++) {
-      if(res[e].isChar){
-        trad += res[e].char
+      if (res[e].isChar) {
+        trad += res[e].char;
         magie += res[e].char.charCodeAt();
-
       }
     }
     // console.log(res)
@@ -87,7 +94,9 @@ function encode(input) {
         mot: primChar.mot,
         syllabe: primChar.syllabe,
         a: a,
-        trad:trad,
+        trad: trad,
+        isRetour: isRetour,
+        isLast: isRetour,
         isMotDebut: isMotDebut,
         id: magieParse,
         // x1: magieSorted[0] * 0.01,

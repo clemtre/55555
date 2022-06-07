@@ -99,12 +99,12 @@ svg {
 }
 
 .ref {
-  color: blue;
-  margin-top: 0;
+  color: var(--noir);
   position: absolute;
   /* font-weight: bold; */
   font-family: monospace;
   z-index: 100;
+  top:40px;
   /* opacity: 0; */
   display: block;
   font-size: 10px;
@@ -113,8 +113,6 @@ svg {
   word-wrap: break-word;
   background-color: white;
   padding: 2px;
-  padding-bottom: 0;
-  padding-top: 0;
   border: 1px solid black;
 }
 .show-transcription {

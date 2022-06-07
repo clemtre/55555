@@ -1,12 +1,13 @@
 :root {
   --approche: 0px;
   --intermot: 0px;
-  --width: 5px;
+  --width: 50px;
   --col-light: red;
   --col-light2: pink;
   --col-light3: yellow;
   --col-accent1: darkgreen;
   --col-accent2: lightgreen;
   --col-accent3: orange;
-  --bg: #180418;
+  --bg: #072a1f;
+  --noir: #072a1f;
 }

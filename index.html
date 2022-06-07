@@ -26,14 +26,17 @@
     <div id="cc"></div>
     <div id="inject"></div>
     <div id="ui">
-      graisse : <input type="range" min="1" max="40" value="5" name="" oninput="drawSignes()" id="slide-graisse">
+      graisse : <input type="number" min="1" max="40" value="5" name="" oninput="drawSignes()" id="slide-graisse">
       <br>
-      approche : <input type="range" min="-200" max="400" value="5" name="" oninput="drawSignes()" id="slide-approche">
+      approche : <input type="number" min="-200" max="400" value="5" name="" oninput="drawSignes()" id="slide-approche">
       <br>
-      intermot : <input type="range" min="-200" max="400" value="5" name="" oninput="drawSignes()" id="slide-intermot">
+      interligne : <input type="number" min="-200" max="400" value="5" name="" oninput="drawSignes()" id="slide-interligne">
+      <br>
+      intermot : <input type="number" min="-200" max="400" value="5" name="" oninput="drawSignes()" id="slide-intermot">
       <br>
       lignes et poignées : <input type="checkbox" name="" id="check-trace" onclick="drawSignes()"> <br>
-      transcription : <input type="checkbox" name="" id="check-transcription"> <br>
+      transcription : <input type="checkbox" name="" id="check-transcription" oninput="drawSignes()"> <br>
+      transcription : <input type="checkbox" name="" id="check-trad" oninput="drawSignes()"> <br>
       syllabe : <input type="checkbox" name="" id="check-syllabe-souligne" oninput="drawSignes()"> <br>
       mot : <input type="checkbox" name="" id="check-mot" oninput="drawSignes()" checked> <br>
       <textarea name="" id="textarea"  cols="30" rows="10" oninput="drawSignes()"></textarea>
